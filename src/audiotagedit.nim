@@ -348,7 +348,7 @@ proc findEditor(): string =
   for key in ["AUDIOTAG_EDITOR", "VISUAL", "EDITOR"]:
     if existsEnv(key):
       return fullPath(getEnv(key))
-  
+
   # If we reached this point, it means that there are no environment variables
   # that can help us, so we must guess
 
