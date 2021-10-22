@@ -388,6 +388,7 @@ Usage:
   audiotagedit --set-only --toml-file=<path> [--preserve-tags]
   audiotagedit (-h | --help)
   audiotagedit --version
+  audiotagedit --license
 
 Options:
   -h --help           Print this help
