@@ -34,7 +34,24 @@ import logging
 
 var logger* = newConsoleLogger()
 
-const version = "0.1.0"
+include versioninfo
+
+const licenseText = """Edit audio file tags from the command line using your favourite editor
+Copyright (C) 2021 Maurizio Tomasi
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
 
 type
   AudioFileItem* = object
@@ -375,6 +392,7 @@ Usage:
 Options:
   -h --help           Print this help
   --version           Print version information
+  --license           Print license information and exit
   --no-checksums      Do not compute nor verify checksums
   --toml-file=<path>  Set the path of the TOML file to create/read
   --get-only          Only read the metadata and save the TOML file
@@ -391,6 +409,10 @@ Options:
     help=true, 
     version="audiotagedit {version}".fmt,
   )
+
+  if args["--license"]:
+    stdout.writeLine(licenseText)
+    quit(0)
 
   if args["--get-only"]:
     var originalEntries = retrieveMetadata(@(args["<file>"]))
