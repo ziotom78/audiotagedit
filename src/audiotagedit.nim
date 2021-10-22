@@ -330,16 +330,22 @@ proc randomTomlFileName(): string =
   result = joinpath(getTempDir(), `$`(genOid()) & ".toml")
 
 
+proc fullPath(path: string): string =
+  if fileExists(path):
+    return path
+
+  result = findExe(path)
+  if path != "":
+    return path
+
+  sys.stderr.write("unable to find \"{path\"".fmt(path))
+  quit(1)
+
+
 proc findEditor(): string =
   for key in ["AUDIOTAG_EDITOR", "VISUAL", "EDITOR"]:
     if existsEnv(key):
-      let editor = getEnv(key)
-      if fileExists(editor):
-        return editor
-
-      let editorPath = findExe(editor)
-      if editorPath != "":
-        return editorPath
+      return fullPath(getEnv(key))
   
   # If we reached this point, it means that there are no environment variables
   # that can help us, so we must guess
@@ -348,6 +354,9 @@ proc findEditor(): string =
     let editorPath = findExe(editor)
     if editorPath != "":
       return editorPath
+
+  stderr.write("error, no suitable editor was found")
+  quit(1)
 
 
 when isMainModule:
