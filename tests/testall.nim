@@ -71,7 +71,7 @@ proc createWritableTestDirectory(): seq[string] =
 
 
 proc testApplyChanges() =
-    let destFilenames = createWritableTestDirectory()
+    var destFilenames = createWritableTestDirectory()
 
     # Step 1: read the metadata from the copies
     var metadata = retrieveMetadata(destFilenames)
@@ -82,9 +82,13 @@ proc testApplyChanges() =
     metadata[destFilenames[0]].year = some(uint(567))
 
     # Force a file name change
-    let newFilename = metadata[destFilenames[0]].oldFileName & "_2"
+    let newFilename = joinpath(
+        parentDir(metadata[destFilenames[1]].oldFileName), 
+        "test.mp3",
+    )
     metadata[destFilenames[1]].newFileName = newFilename
-    
+    destFilenames[1] = newFilename
+
     metadata.applyChanges(preserveMetadata = false)
 
     # Step 3: re-read the metadata and check that the

@@ -259,7 +259,7 @@ proc applyChanges*(metadata: OrderedTableRef[string, AudioFileItem], preserveMet
 
     block:
       var curFile = try:
-        taglib.open_unknown(item.newFileName)
+        taglib.open(item.newFileName)
       except IOError:
         stderr.write("unable to read file \"{item.newFileName}\"".fmt)
         raise
