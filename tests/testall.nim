@@ -2,7 +2,6 @@ import options
 import oids
 import os
 import tables
-import std/sha1
 
 import ../src/audiotagedit
 
