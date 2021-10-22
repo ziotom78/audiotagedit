@@ -29,7 +29,7 @@ jobs:
             if [[ "${{ runner.os }}" == "macOS" ]]; then
               brew install taglib
             else
-              apt install taglib
+              sudo apt-get install -y libtagc0-dev
             fi
 
       - run: nimble build -Y
