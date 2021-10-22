@@ -31,7 +31,7 @@ jobs:
         with:
           args: >-
             --standalone
-            --output=manpage.1
+            --output=audiotagedit.1
             --to=man
             manpage.md
       - name: Create artifact
