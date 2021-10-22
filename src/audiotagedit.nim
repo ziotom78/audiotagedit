@@ -250,9 +250,11 @@ proc applyChanges*(metadata: OrderedTableRef[string, AudioFileItem], preserveMet
       doAssert item.checksum.get() == secureHashFile(item.oldFileName)
 
     let mustCopyFile = item.newFileName != item.oldFileName
-
     if mustCopyFile:
       stderr.writeLine("moving \"{item.oldFileName}\" to \"{item.newFileName}\"".fmt)
+
+      # Make sure that the parent directory exists, otherwise create it
+      createDir(parentDir(item.newFileName))
       copyFile(source = item.oldFileName, dest = item.newFileName)
 
     block:
