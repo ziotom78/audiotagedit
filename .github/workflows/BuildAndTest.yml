@@ -10,5 +10,6 @@ jobs:
       - uses: jiro4989/setup-nim-action@v1
         with:
           nim-version: "1.4.8"
+      - run: "apt install libtagc0-dev"
       - run: "nimble build -y"
       - run: "nimble test -y"
