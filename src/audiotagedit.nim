@@ -34,7 +34,8 @@ import logging
 
 var logger* = newConsoleLogger()
 
-include versioninfo
+const NimblePkgVersion {.strdefine.} = "Unknown"
+const version = NimblePkgVersion
 
 const licenseText = """Edit audio file tags from the command line using your favourite editor
 Copyright (C) 2021 Maurizio Tomasi
