@@ -1,5 +1,8 @@
 # Audiotagedit
 
+[![BuildAndTest](https://github.com/ziotom78/audiotagedit/actions/workflows/BuildAndTest.yml/badge.svg)](https://github.com/ziotom78/audiotagedit/actions/workflows/BuildAndTest.yml)
+ [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+ 
 A program to modify audio tags from the command line using your favourite editor. It uses the [TagLib](https://taglib.org/) library and can read/write tags from MP3, OGG, FLAC files, as well as any other format supported by TagLib.
 
 ![](./audiotagedit-demo.gif)
