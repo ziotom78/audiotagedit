@@ -338,7 +338,7 @@ proc fullPath(path: string): string =
   if path != "":
     return path
 
-  sys.stderr.write("unable to find \"{path\"".fmt(path))
+  stderr.writeLine("unable to find \"{path\"".fmt(path))
   quit(1)
 
 
