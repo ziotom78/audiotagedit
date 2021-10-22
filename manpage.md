@@ -2,7 +2,7 @@
 title: "audiotagedit"
 section: 1
 header: "User manual"
-footer: "audiotagedit"
+footer: "audiotagedit 0.2.0"
 date: "October 2021"
 ---
 

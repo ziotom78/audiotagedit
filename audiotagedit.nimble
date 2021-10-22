@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.1"
+version       = "0.2.0"
 author        = "Maurizio Tomasi"
 description   = "CLI editor for audio tags, similar to vorbistagedit"
 license       = "GPL-3.0-or-later"
