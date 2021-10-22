@@ -2,7 +2,7 @@
 
 A program to modify audio tags from the command line using your favourite editor. It uses the [TagLib](https://taglib.org/) library and can read/write tags from MP3, OGG, FLAC files, as well as any other format supported by TagLib.
 
-!()[./audiotagedit-demo.gif]
+![](./audiotagedit-demo.gif)
 
 # Building from sources
 
