@@ -23,6 +23,8 @@ date: "October 2021"
 
 **audiotagedit** **--version**
 
+**audiotagedit** **--license**
+
 
 # DESCRIPTION
 
@@ -96,7 +98,10 @@ Here is an example of a valid TOML file:
 : display a help message
 
 **--version**
-: prints version information to *stdout*
+: prints version information to *stdout* and exit.
+
+**--license**
+: print license information and exit.
 
 **--no-checksums**
 : Do not output file checksums in the TOML nor check them
@@ -137,7 +142,7 @@ Here is an example of a valid TOML file:
 
 # LICENSE
 
-The program is released under a MIT license.
+The program is released under a GPL v3 license, as the code uses TagLib, which is released under this license.
 
 # HISTORY
 
