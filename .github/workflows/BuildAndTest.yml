@@ -4,12 +4,21 @@ on: [push]
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v2
       - uses: jiro4989/setup-nim-action@v1
         with:
           nim-version: "1.4.8"
-      - run: "sudo apt-get install -y libtagc0-dev"
+      - name: Install TagLib
+        run: |
+            if [[ "${{ runner.os }}" == "macOS" ]]; then
+              brew install taglib
+            else
+              sudo apt-get install -y libtagc0-dev
+            fi
       - run: "nimble build -y"
       - run: "nimble test -y"

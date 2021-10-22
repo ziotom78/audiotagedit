@@ -24,7 +24,7 @@ jobs:
       - uses: jiro4989/setup-nim-action@v1
         with:
           nim-version: ${{ env.NIM_VERSION }}
-      - name: Install TagLib
+      - name: Install TagLib and Pandoc
         run: |
             if [[ "${{ runner.os }}" == "macOS" ]]; then
               brew install taglib pandoc
