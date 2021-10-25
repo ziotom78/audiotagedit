@@ -9,7 +9,7 @@ env:
   APP_NAME: "audiotagedit"
   NIM_VERSION: "stable"
   MAINTAINER: "Maurizio Tomasi"
-  RELEASE_FILES: audiotagedit LICENSE.md README.md manpage.md
+  RELEASE_FILES: audiotagedit LICENSE.md README.md manpage.1
 
 jobs:
   build-artifact:

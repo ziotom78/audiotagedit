@@ -1,21 +1,24 @@
 # -*- encoding: utf-8 -*-
 #
 # audiotagedit
-# Edit audio file tags from the command line using your favourite editor
 # Copyright (C) 2021 Maurizio Tomasi
 #
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import times
 import tables
@@ -34,7 +37,29 @@ import logging
 
 var logger* = newConsoleLogger()
 
-const version = "0.1.0"
+const NimblePkgVersion {.strdefine.} = "Unknown"
+const version = NimblePkgVersion
+
+const licenseText = """Edit audio file tags from the command line using your favourite editor
+Copyright (C) 2021 Maurizio Tomasi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+"""
 
 type
   AudioFileItem* = object
@@ -337,17 +362,17 @@ proc fullPath(path: string): string =
     return path
 
   result = findExe(path)
-  if path != "":
-    return path
-
-  stderr.writeLine("unable to find \"{path}\"".fmt)
-  quit(1)
+  if result == "":
+    stderr.writeLine("unable to find editor \"{path}\"".fmt)
+    quit(1)
 
 
 proc findEditor(): string =
   for key in ["AUDIOTAG_EDITOR", "VISUAL", "EDITOR"]:
     if existsEnv(key):
-      return fullPath(getEnv(key))
+      let value = getEnv(key)
+      if value != "":
+        return fullPath(value)
 
   # If we reached this point, it means that there are no environment variables
   # that can help us, so we must guess
@@ -371,10 +396,12 @@ Usage:
   audiotagedit --set-only --toml-file=<path> [--preserve-tags]
   audiotagedit (-h | --help)
   audiotagedit --version
+  audiotagedit --license
 
 Options:
   -h --help           Print this help
   --version           Print version information
+  --license           Print license information and exit
   --no-checksums      Do not compute nor verify checksums
   --toml-file=<path>  Set the path of the TOML file to create/read
   --get-only          Only read the metadata and save the TOML file
@@ -391,6 +418,10 @@ Options:
     help=true, 
     version="audiotagedit {version}".fmt,
   )
+
+  if args["--license"]:
+    stdout.writeLine(licenseText)
+    quit(0)
 
   if args["--get-only"]:
     var originalEntries = retrieveMetadata(@(args["<file>"]))
